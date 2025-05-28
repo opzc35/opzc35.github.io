@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>题解：AT_code_festival_relay_f ループを探せ</title>
+    <link href="/2025/05/28/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-code-festival-relay-f-%E3%83%AB%E3%83%BC%E3%83%97%E3%82%92%E6%8E%A2%E3%81%9B/"/>
+    <url>/2025/05/28/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-code-festival-relay-f-%E3%83%AB%E3%83%BC%E3%83%97%E3%82%92%E6%8E%A2%E3%81%9B/</url>
+    
+    <content type="html"><![CDATA[<h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给你一个 $n$ 个点，$n$ 个边的无向联通图，让你找到这个图中环的长度</p><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>众所周知，拓扑排序对于无环图可以遍历，那么没被遍历到的肯定就是环中的元素。</p><p>考虑对于图进行拓扑排序。记录每次遍历到的点，用 $n$ 减去遍历过的节点即可。</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> n,ans;<br>vector&lt;<span class="hljs-type">int</span>&gt; g[<span class="hljs-number">100005</span>];<span class="hljs-comment">//这里使用vector邻接表来存图</span><br><span class="hljs-type">int</span> d[<span class="hljs-number">100005</span>];<br><span class="hljs-type">bool</span> vis[<span class="hljs-number">100005</span>];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>cin&gt;&gt;n;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)&#123;<br><span class="hljs-type">int</span> x,y;<br>cin&gt;&gt;x&gt;&gt;y;<br>d[x]++,d[y]++;<br>g[x].<span class="hljs-built_in">push_back</span>(y);<br>g[y].<span class="hljs-built_in">push_back</span>(x);<br><span class="hljs-comment">//加边</span><br>&#125;<br>queue&lt;<span class="hljs-type">int</span>&gt; q;<br><span class="hljs-comment">//找到第一次拓扑排序的点</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)&#123;<br><span class="hljs-keyword">if</span>(d[i]==<span class="hljs-number">1</span>)&#123;<br>q.<span class="hljs-built_in">push</span>(i);<br>vis[i]=<span class="hljs-number">1</span>;<br>&#125;<br>&#125;<br><span class="hljs-comment">//拓扑排序过程</span><br><span class="hljs-keyword">while</span>(q.<span class="hljs-built_in">size</span>())&#123;<br><span class="hljs-type">int</span> t=q.<span class="hljs-built_in">front</span>();<br>q.<span class="hljs-built_in">pop</span>();<br>ans++;<span class="hljs-comment">//计算遍历过的点的数量</span><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> v:g[t])&#123;<br><span class="hljs-keyword">if</span>(vis[v])<span class="hljs-keyword">continue</span>;<br>d[v]--;<br><span class="hljs-keyword">if</span>(d[v]==<span class="hljs-number">1</span>)&#123;<br>q.<span class="hljs-built_in">push</span>(v);<br>vis[v]=<span class="hljs-number">1</span>;<br><span class="hljs-comment">//找到下一次遍历的节点</span><br>&#125;<br>&#125;<br>&#125;<br>cout&lt;&lt;n-ans;<br>cout&lt;&lt;endl;<span class="hljs-comment">//注意这里，Atcoder早期题目末尾必须加上这个</span><br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h2><p>冷知识，Atcoder 前期比赛的输出末尾是要加上换行的，如果你没有加上，那么恭喜你，你将会全部答案错误。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>C++,Algorithm,OI,AtCoder,编程,算法,Solution,题解</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>题解：P6606 [Code+#7] 最小路径串</title>
     <link href="/2025/05/28/%E9%A2%98%E8%A7%A3%EF%BC%9AP6606-Code-7-%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E4%B8%B2/"/>
     <url>/2025/05/28/%E9%A2%98%E8%A7%A3%EF%BC%9AP6606-Code-7-%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E4%B8%B2/</url>
@@ -14,7 +33,7 @@
     
     <tags>
       
-      <tag>C++,Alorthim,DFS</tag>
+      <tag>C++,Alorthim,DFS,Solution,题解,Luogu,洛谷</tag>
       
     </tags>
     
@@ -33,7 +52,7 @@
     
     <tags>
       
-      <tag>BFS,C++,Algorthim</tag>
+      <tag>BFS,C++,Algorthim,题解,Solution,CodeForces</tag>
       
     </tags>
     
