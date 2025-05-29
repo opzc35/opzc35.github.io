@@ -4,6 +4,47 @@
   
   
   <entry>
+    <title>题解：AT_donuts_live2014_4 サバゲー</title>
+    <link href="/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-donuts-live2014-4-%E3%82%B5%E3%83%90%E3%82%B2%E3%83%BC/"/>
+    <url>/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-donuts-live2014-4-%E3%82%B5%E3%83%90%E3%82%B2%E3%83%BC/</url>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/AT_donuts_live2014_4">题目(洛谷)</a><br><a href="https://atcoder.jp/contests/donuts-live2014/tasks/donuts_live2014_4">题目(AtCoder)</a><br><a href="https://vjudge.net/problem/AtCoder-donuts_live2014_4">题目(Vjudge)</a></p><h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>把 $n$ 个人分成 $m$ 组一共有多少种分法？</p><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>从数据范围分析：</p><blockquote><p>$2 \le N \le 1000$</p></blockquote><p>可得出我们需要 $O(n^2)$ 以内的算法。考虑<strong>动态规划（dp）</strong>。</p><h2 id="为什么考虑-dp"><a href="#为什么考虑-dp" class="headerlink" title="为什么考虑 dp"></a>为什么考虑 dp</h2><p>这道题考虑方案组数，dp 非常适合解决这种问题。又由于本题可以将<strong>方案数量叠加推导</strong>得出下一层答案，所以非常适合 dp。</p><p>总结：这道题可以从前往后推导，所以适合 dp。</p><h2 id="怎么做"><a href="#怎么做" class="headerlink" title="怎么做"></a>怎么做</h2><p>dp 分 3 大要素：</p><h3 id="1-状态"><a href="#1-状态" class="headerlink" title="1. 状态"></a>1. 状态</h3><p>我们可以考虑设 $dp_{i,j}$ 为<strong>将 $i$ 个人分为 $j$ 组的方案数</strong>。</p><h3 id="2-向后推导"><a href="#2-向后推导" class="headerlink" title="2. 向后推导"></a>2. 向后推导</h3><p>我们可以推出 $dp_{i,j} &#x3D; dp_{i-1,j-1}+dp_{i-1,j}\times j$。</p><p>为什么呢？$dp_{i-1,j-1}$ 就不用多说了，是上一次的状态，我们要推导过来肯定需要从这里推导。</p><p>至于 $dp_{i-1,j}$，就是第 $i$ 个人进来后，可以进入 $1$ 至 $j$ 每一个组。总共就是通过乘法原理：$dp_{i-1,j}+dp_{i-1,j}+\dots+dp_{i-1,j}$（一共 $j$ 个）。</p><p>所以，我们得出了结论，$dp_{i,j} &#x3D; dp_{i-1,j-1}+dp_{i-1,j}\times j$</p><h2 id="3-答案"><a href="#3-答案" class="headerlink" title="3. 答案"></a>3. 答案</h2><p>我们已经在<strong>第一步</strong>中设置了 $dp_{i,j}$ 的状态了，第 $n$ 个人分成 $m$ 组自然而然就是 $dp_{n,m}$</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> int long long</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mod 1000000007</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> n,m;<br><span class="hljs-type">int</span> dp[<span class="hljs-number">1005</span>][<span class="hljs-number">1005</span>];<br><span class="hljs-function"><span class="hljs-type">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    cin&gt;&gt;n&gt;&gt;m;<br>    dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++)&#123;<br>            dp[i][j]=(dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>]+dp[i<span class="hljs-number">-1</span>][j]*j)%mod;<br>        &#125;<br>    &#125;<br>    cout&lt;&lt;dp[n][m];<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h2><blockquote><p>十年 OI 一场空，不开 longlong 见祖宗。</p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>题解</category>
+      
+      <category>AtCoder</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>C++</tag>
+      
+      <tag>Algorithm</tag>
+      
+      <tag>OI</tag>
+      
+      <tag>AtCoder</tag>
+      
+      <tag>编程</tag>
+      
+      <tag>算法</tag>
+      
+      <tag>Solution</tag>
+      
+      <tag>题解</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>题解：CF1466C Canine poetry</title>
     <link href="/%E9%A2%98%E8%A7%A3%EF%BC%9ACF1466C-Canine-poetry/"/>
     <url>/%E9%A2%98%E8%A7%A3%EF%BC%9ACF1466C-Canine-poetry/</url>
