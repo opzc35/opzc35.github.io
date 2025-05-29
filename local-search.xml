@@ -4,6 +4,47 @@
   
   
   <entry>
+    <title>题解：AT_diverta2019_d DivRem Number</title>
+    <link href="/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-diverta2019-d-DivRem-Number/"/>
+    <url>/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-diverta2019-d-DivRem-Number/</url>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/AT_diverta2019_d">题目(洛谷)</a><br><a href="https://atcoder.jp/contests/diverta2019/tasks/diverta2019_d">题目(AtCoder)</a><br><a href="https://vjudge.net/problem/AtCoder-diverta2019_d">题目(Vjudge)</a></p><h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>给定一个 $N$，求所有的 $M$ 满足 $\lfloor \frac{N}{M}\rfloor &#x3D; N \bmod M$。</p><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>众所周知，除法的一般形式都是这样的：</p><p>$$N \div M &#x3D; Q \cdots R$$</p><p>放入题中式子可得</p><p>$$N \div M &#x3D; M \cdots M$$</p><p>$$\therefore N &#x3D; M\times M + M$$</p><p>所以时间复杂度在 $O(\sqrt N)$ 左右，枚举 $M$ 能够通过。</p><h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> int long long</span><br><span class="hljs-type">int</span> ans;<br><span class="hljs-function"><span class="hljs-type">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-type">int</span> n;<br>    cin&gt;&gt;n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i*i+i&lt;=n;i++)&#123;<br>        <span class="hljs-keyword">if</span>(n%i==<span class="hljs-number">0</span>)&#123;<br>            ans+=(n/i)<span class="hljs-number">-1</span>;<br>        &#125;<br>    &#125;<br>    cout&lt;&lt;ans;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h2><p>使用</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> int long long</span><br></code></pre></td></tr></table></figure><p>可将整个程序所有的 <code>int</code> 变为 <code>long long</code>，可是这样做有一个弊端，就是 <code>main()</code> 的返回值会变成 <code>long long</code>，可是 <code>C++</code> 中不允许这么做。</p><p>为了解决这个问题，我们可以将 <code>main()</code> 的返回值变为 <code>signed</code>（即无符号整数）也可以正常编译。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>题解</category>
+      
+      <category>AtCoder</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>C++</tag>
+      
+      <tag>Algorithm</tag>
+      
+      <tag>OI</tag>
+      
+      <tag>AtCoder</tag>
+      
+      <tag>编程</tag>
+      
+      <tag>算法</tag>
+      
+      <tag>Solution</tag>
+      
+      <tag>题解</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>题解：AT_donuts_live2014_4 サバゲー</title>
     <link href="/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-donuts-live2014-4-%E3%82%B5%E3%83%90%E3%82%B2%E3%83%BC/"/>
     <url>/%E9%A2%98%E8%A7%A3%EF%BC%9AAT-donuts-live2014-4-%E3%82%B5%E3%83%90%E3%82%B2%E3%83%BC/</url>
